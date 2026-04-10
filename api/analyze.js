@@ -59,7 +59,7 @@ export default async function handler(req, res) {
 
   const genAI = new GoogleGenerativeAI(apiKey);
   const model = genAI.getGenerativeModel({ 
-    model: modelId || "gemini-1.5-flash",
+    model: modelId || "gemini-2.0-flash",
     systemInstruction: SYSTEM_PROMPT,
   });
 
