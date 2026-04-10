@@ -1,9 +1,10 @@
-/** * AI Literacy Coach - Main Application Logic */
+/**
+ * AI Literacy Coach - Main Application Logic
+ */
 import { MODELS, SDG_INFO } from './constants.js';
 import { analyzePrompt } from './gemini.js';
 
 // DOM Elements
-const apiKeyInput = document.getElementById('apiKey');
 const modelSelect = document.getElementById('modelSelect');
 const userPromptInput = document.getElementById('userPrompt');
 const analyzeBtn = document.getElementById('analyzeBtn');
@@ -42,19 +43,11 @@ function init() {
         modelSelect.appendChild(option);
     });
 
-    // Load saved settings
-    const savedKey = localStorage.getItem('gemini_api_key');
-    if (savedKey) apiKeyInput.value = savedKey;
-
     const savedModel = localStorage.getItem('gemini_model');
     if (savedModel) modelSelect.value = savedModel;
 
     // Event Listeners
     analyzeBtn.addEventListener('click', handleAnalyze);
-    
-    apiKeyInput.addEventListener('change', () => {
-        localStorage.setItem('gemini_api_key', apiKeyInput.value);
-    });
 
     modelSelect.addEventListener('change', () => {
         localStorage.setItem('gemini_model', modelSelect.value);
@@ -64,7 +57,7 @@ function init() {
     showSdgBtn.addEventListener('click', (e) => {
         e.preventDefault();
         sdgTitle.textContent = SDG_INFO.title;
-        sdgContent.innerHTML = '<p>' + SDG_INFO.content + '</p>';
+        sdgContent.innerHTML = `<p>${SDG_INFO.content}</p>`;
         sdgModal.classList.remove('hidden');
     });
 
@@ -83,16 +76,10 @@ function init() {
  */
 async function handleAnalyze() {
     const prompt = userPromptInput.value.trim();
-    const apiKey = apiKeyInput.value.trim();
     const modelId = modelSelect.value;
 
     if (!prompt) {
         alert("Please enter a prompt to analyze.");
-        return;
-    }
-
-    if (!apiKey) {
-        alert("Please enter your Gemini API Key in the settings sidebar.");
         return;
     }
 
@@ -102,7 +89,8 @@ async function handleAnalyze() {
     loadingArea.classList.remove('hidden');
 
     try {
-        const evaluation = await analyzePrompt(apiKey, modelId, prompt);
+        // Pass null for apiKey as it's now handled by the backend
+        const evaluation = await analyzePrompt(null, modelId, prompt);
         displayResults(evaluation);
     } catch (error) {
         alert(error.message);
@@ -120,7 +108,7 @@ function displayResults(data) {
     
     // Animate overall score
     animateValue(overallScoreEl, 0, data.score, 1000);
-    overallProgress.style.width = data.score + '%';
+    overallProgress.style.width = `${data.score}%`;
 
     // Metrics
     updateMetric('clarity', data.metrics.clarity);
@@ -135,12 +123,12 @@ function displayResults(data) {
     data.suggestions.forEach(suggestion => {
         const div = document.createElement('div');
         div.className = 'suggestion-item';
-        div.innerHTML = '<span class="bullet">-></span> <span>' + suggestion + '</span>';
+        div.innerHTML = `<span class="bullet">→</span> <span>${suggestion}</span>`;
         suggestionsList.appendChild(div);
     });
 
     // Improved Prompt
-    improvedPromptText.textContent = '"' + data.improvedPrompt + '"';
+    improvedPromptText.textContent = `"${data.improvedPrompt}"`;
 
     // Scroll to results
     resultsArea.scrollIntoView({ behavior: 'smooth' });
@@ -150,10 +138,10 @@ function displayResults(data) {
  * Helper to update metric UI
  */
 function updateMetric(id, value) {
-    const valEl = document.getElementById(id + 'Val');
-    const barEl = document.getElementById(id + 'Bar');
-    valEl.textContent = value + '/10';
-    barEl.style.width = (value * 10) + '%';
+    const valEl = document.getElementById(`${id}Val`);
+    const barEl = document.getElementById(`${id}Bar`);
+    valEl.textContent = `${value}/10`;
+    barEl.style.width = `${value * 10}%`;
 }
 
 /**
