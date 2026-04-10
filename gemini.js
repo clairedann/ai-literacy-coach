@@ -1,7 +1,6 @@
 /**
- * Gemini API Integration Wrapper
+ * AI Literacy Coach - Gemini Integration Wrapper
  */
-import { SYSTEM_PROMPT } from './constants.js';
 
 /**
  * Robustly extracts and parses JSON from a string that might contain extra text or markdown blocks.
@@ -11,11 +10,11 @@ function extractJSON(text) {
         // Try to find the first '{' and last '}'
         const firstBrace = text.indexOf('{');
         const lastBrace = text.lastIndexOf('}');
-        
+
         if (firstBrace === -1 || lastBrace === -1) {
             throw new Error("No JSON object found in response");
         }
-        
+
         const jsonString = text.substring(firstBrace, lastBrace + 1);
         return JSON.parse(jsonString);
     } catch (e) {
@@ -24,41 +23,30 @@ function extractJSON(text) {
     }
 }
 
+/**
+ * Sends the user prompt to the analysis backend (serverless function).
+ */
 export async function analyzePrompt(apiKey, modelId, userPrompt) {
-    if (!apiKey) throw new Error("API Key is required. Please add it in settings.");
-    
-    const { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold } = await import('https://esm.run/@google/generative-ai');
-    
-    const genAI = new GoogleGenerativeAI(apiKey);
-    
-    // Safety settings to ensure educational focus while blocking harmful content
-    const safetySettings = [
-        { category: HarmCategory.HARM_CATEGORY_HARASSMENT, threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE },
-        { category: HarmCategory.HARM_CATEGORY_HATE_SPEECH, threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE },
-        { category: HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT, threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE },
-        { category: HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT, threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE },
-    ];
-
-    const model = genAI.getGenerativeModel({ 
-        model: modelId || "gemini-1.5-flash",
-        systemInstruction: SYSTEM_PROMPT,
-        safetySettings
-    });
-
-    const prompt = `Analyze this student prompt: "${userPrompt}"`;
-
     try {
-        const result = await model.generateContent(prompt);
-        const response = await result.response;
-        const text = response.text();
-        return extractJSON(text);
-    } catch (error) {
-        console.error("Gemini API Error:", error);
-        
-        if (error.message.includes("SAFETY")) {
-            throw new Error("Your prompt was flagged by safety filters. Please ensure it follows educational and ethical guidelines.");
+        const response = await fetch('/api/analyze', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                userPrompt,
+                modelId
+            })
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.error || `Server error: ${response.status}`);
         }
-        
-        throw new Error(error.message || "Failed to communicate with Gemini. Please check your API key and connection.");
+
+        return await response.json();
+    } catch (error) {
+        console.error("Analysis Error:", error);
+        throw error;
     }
 }
