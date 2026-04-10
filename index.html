@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en"><head>
+<html lang="en">
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Literacy Coach | Master the Future</title>
@@ -7,8 +8,8 @@
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&amp;display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
     
     <!-- Icon library (Lucide Icons via CDN) -->
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -27,138 +28,6 @@
         <nav class="settings-section">
             <span class="section-label">Configuration</span>
             <div class="settings-card">
-                <div class="input-group">
-                    <label for="apiKey">Gemini API Key</label>
-                    <input type="password" id="apiKey" class="input-field" placeholder="Paste your key here...">
-                </div>
-                <div class="input-group">
-                    <label for="modelSelect">Intelligence Level</label>
-                    <select id="modelSelect" class="input-field">
-                        <!-- Options will be populated by JS -->
-                    </select>
-                </div>
-            </div>
-        </nav>
-
-        <nav class="info-section">
-            <span class="section-label">Resources</span>
-            <div class="settings-card">
-                <a href="#" id="showSdg" style="color: var(--text-primary); text-decoration: none; display: flex; align-items: center; gap: 8px; font-size: 0.9rem;">
-                    <i data-lucide="globe-2" size="18"></i> SDG #4 Information
-                </a>
-                <a href="#" id="showGuidelines" style="color: var(--text-primary); text-decoration: none; display: flex; align-items: center; gap: 8px; font-size: 0.9rem;">
-                    <i data-lucide="shield-check" size="18"></i> Ethical AI Use
-                </a>
-            </div>
-        </nav>
-
-        <div style="margin-top: auto; color: var(--text-secondary); font-size: 0.8rem; text-align: center;">
-            <p>Empowering students for 2026 and beyond.</p>
-        </div>
-    </aside>
-
-    <!-- Main Content Area -->
-    <main class="main-content">
-        <div class="prompt-area">
-            <header class="welcome-header fade-in">
-                <h1>Prompt Lab</h1>
-                <p>Don't just get answers. Learn how to <strong>think</strong> with AI.</p>
-            </header>
-
-            <section class="prompt-box-container fade-in" style="animation-delay: 0.1s;">
-                <textarea id="userPrompt" class="prompt-input" placeholder="Enter your prompt here... (e.g., 'Help me draft an outline for a history project about the industrial revolution')"></textarea>
-                <div class="prompt-actions">
-                    <button id="analyzeBtn" class="btn-primary">
-                        <span>Analyze Prompt</span>
-                        <i data-lucide="sparkles" size="20"></i>
-                    </button>
-                </div>
-            </section>
-
-            <!-- Loading State -->
-            <div id="loading" class="hidden" style="text-align: center; padding: 40px;">
-                <div class="score-value" style="font-size: 1.5rem;">Analyzing your thinking...</div>
-                <p>Connecting to Gemini Intelligence</p>
-            </div>
-
-            <!-- Dashboard Results -->
-            <section id="results" class="hidden fade-in" style="display: flex; flex-direction: column; gap: 32px; padding-bottom: 60px;">
-                <div class="feedback-grid">
-                    <div class="score-card">
-                        <span class="section-label">Overall Score</span>
-                        <div id="overallScore" class="score-value">0</div>
-                        <div class="progress-container">
-                            <div id="overallProgress" class="progress-bar"></div>
-                        </div>
-                    </div>
-                    <div class="score-card">
-                        <span class="section-label">Metrics</span>
-                        <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 16px; text-align: left;">
-                            <div>
-                                <div style="display: flex; justify-content: space-between; font-size: 0.8rem; margin-bottom: 4px;">
-                                    <span>Clarity</span> <span id="clarityVal">0/10</span>
-                                </div>
-                                <div class="progress-container" style="height: 4px;"><div id="clarityBar" class="progress-bar" style="background: var(--success)"></div></div>
-                            </div>
-                            <div>
-                                <div style="display: flex; justify-content: space-between; font-size: 0.8rem; margin-bottom: 4px;">
-                                    <span>Specificity</span> <span id="specificityVal">0/10</span>
-                                </div>
-                                <div class="progress-container" style="height: 4px;"><div id="specificityBar" class="progress-bar" style="background: var(--warning)"></div></div>
-                            </div>
-                            <div>
-                                <div style="display: flex; justify-content: space-between; font-size: 0.8rem; margin-bottom: 4px;">
-                                    <span>Depth</span> <span id="depthVal">0/10</span>
-                                </div>
-                                <div class="progress-container" style="height: 4px;"><div id="depthBar" class="progress-bar" style="background: var(--accent-light)"></div></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="feedback-details">
-                    <h3>Coach's Feedback</h3>
-                    <div id="detailedFeedback"></div>
-                    
-                    <div style="margin-top: 32px;">
-                        <h4>Key Suggestions</h4>
-                        <div id="suggestionsList" style="margin-top: 16px;"></div>
-                    </div>
-
-                    <div style="margin-top: 32px; padding: 20px; background: rgba(0,0,0,0.2); border-left: 4px solid var(--accent-color); border-radius: 8px;">
-                        <h4>Try this improved version:</h4> <!DOCTYPE html>
-<html lang="en"><head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Literacy Coach | Master the Future</title>
-    <meta name="description" content="Learn how to use AI effectively and ethically with our interactive prompt coach. Aligning with UN SDG #4.">
-    
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&amp;display=swap" rel="stylesheet">
-    
-    <!-- Icon library (Lucide Icons via CDN) -->
-    <script src="https://unpkg.com/lucide@latest"></script>
-    
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-
-    <!-- Sidebar Settings -->
-    <aside class="sidebar">
-        <div class="logo">
-            <i data-lucide="brain-circuit"></i>
-            <span>AI Coach</span>
-        </div>
-
-        <nav class="settings-section">
-            <span class="section-label">Configuration</span>
-            <div class="settings-card">
-                <div class="input-group">
-                    <label for="apiKey">Gemini API Key</label>
-                    <input type="password" id="apiKey" class="input-field" placeholder="Paste your key here...">
-                </div>
                 <div class="input-group">
                     <label for="modelSelect">Intelligence Level</label>
                     <select id="modelSelect" class="input-field">
@@ -255,30 +124,6 @@
 
                     <div style="margin-top: 32px; padding: 20px; background: rgba(0,0,0,0.2); border-left: 4px solid var(--accent-color); border-radius: 8px;">
                         <h4>Try this improved version:</h4>
-                        <p id="improvedPromptText" style="margin-top: 12px; font-style: italic; color: var(--text-secondary);"></p>
-                    </div>
-                </div>
-            </section>
-        </div>
-    </main>
-
-    <!-- Modals -->
-    <div id="sdgModal" class="modal-overlay hidden">
-        <div class="modal-content">
-            <span class="close-modal" id="closeSdg"><i data-lucide="x"></i></span>
-            <h2 id="sdgTitle">Quality Education (SDG #4)</h2>
-            <div id="sdgContent" style="margin-top: 20px; line-height: 1.6;"></div>
-        </div>
-    </div>
-
-    <!-- Main Logic -->
-    <script type="module" src="app.js"></script>
-    <script>
-        // Initialize Lucide icons
-        lucide.createIcons();
-    </script>
-</body>
-</html>
                         <p id="improvedPromptText" style="margin-top: 12px; font-style: italic; color: var(--text-secondary);"></p>
                     </div>
                 </div>
