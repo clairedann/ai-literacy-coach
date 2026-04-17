@@ -6,7 +6,6 @@ import { analyzePrompt } from './gemini.js';
 
 // DOM Elements
 const apiKeyInput = document.getElementById('apiKey');
-const modelSelect = document.getElementById('modelSelect');
 const userPromptInput = document.getElementById('userPrompt');
 const analyzeBtn = document.getElementById('analyzeBtn');
 const resultsArea = document.getElementById('results');
@@ -37,30 +36,15 @@ const sdgContent = document.getElementById('sdgContent');
  * Initialize Application
  */
 function init() {
-    // Populate Model Selection
-    MODELS.forEach(model => {
-        const option = document.createElement('option');
-        option.value = model.id;
-        option.textContent = model.name;
-        modelSelect.appendChild(option);
-    });
-
     // Load saved settings
     const savedKey = localStorage.getItem('gemini_api_key');
     if (savedKey) apiKeyInput.value = savedKey;
-
-    const savedModel = localStorage.getItem('gemini_model');
-    if (savedModel) modelSelect.value = savedModel;
 
     // Event Listeners
     analyzeBtn.addEventListener('click', handleAnalyze);
     
     apiKeyInput.addEventListener('change', () => {
         localStorage.setItem('gemini_api_key', apiKeyInput.value);
-    });
-
-    modelSelect.addEventListener('change', () => {
-        localStorage.setItem('gemini_model', modelSelect.value);
     });
 
     // Modal Listeners
@@ -87,7 +71,6 @@ function init() {
 async function handleAnalyze() {
     const prompt = userPromptInput.value.trim();
     const apiKey = apiKeyInput.value.trim();
-    const modelId = modelSelect.value;
 
     if (!prompt) {
         alert("Please enter a prompt to analyze.");
@@ -105,7 +88,7 @@ async function handleAnalyze() {
     loadingArea.classList.remove('hidden');
 
     try {
-        const evaluation = await analyzePrompt(apiKey, modelId, prompt);
+        const evaluation = await analyzePrompt(apiKey, 'gemini-1.5-flash', prompt);
         displayResults(evaluation);
     } catch (error) {
         alert(error.message);
