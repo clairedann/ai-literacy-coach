@@ -5,6 +5,7 @@ import { MODELS, SDG_INFO } from './constants.js';
 import { analyzePrompt } from './gemini.js';
 
 // DOM Elements
+const apiKeyInput = document.getElementById('apiKey');
 const modelSelect = document.getElementById('modelSelect');
 const userPromptInput = document.getElementById('userPrompt');
 const analyzeBtn = document.getElementById('analyzeBtn');
@@ -20,6 +21,7 @@ const specificityVal = document.getElementById('specificityVal');
 const specificityBar = document.getElementById('specificityBar');
 const depthVal = document.getElementById('depthVal');
 const depthBar = document.getElementById('depthBar');
+
 const detailedFeedback = document.getElementById('detailedFeedback');
 const suggestionsList = document.getElementById('suggestionsList');
 const improvedPromptText = document.getElementById('improvedPromptText');
@@ -43,11 +45,19 @@ function init() {
         modelSelect.appendChild(option);
     });
 
+    // Load saved settings
+    const savedKey = localStorage.getItem('gemini_api_key');
+    if (savedKey) apiKeyInput.value = savedKey;
+
     const savedModel = localStorage.getItem('gemini_model');
     if (savedModel) modelSelect.value = savedModel;
 
     // Event Listeners
     analyzeBtn.addEventListener('click', handleAnalyze);
+    
+    apiKeyInput.addEventListener('change', () => {
+        localStorage.setItem('gemini_api_key', apiKeyInput.value);
+    });
 
     modelSelect.addEventListener('change', () => {
         localStorage.setItem('gemini_model', modelSelect.value);
@@ -76,10 +86,16 @@ function init() {
  */
 async function handleAnalyze() {
     const prompt = userPromptInput.value.trim();
+    const apiKey = apiKeyInput.value.trim();
     const modelId = modelSelect.value;
 
     if (!prompt) {
         alert("Please enter a prompt to analyze.");
+        return;
+    }
+
+    if (!apiKey) {
+        alert("Please enter your Gemini API Key in the settings sidebar.");
         return;
     }
 
@@ -89,8 +105,7 @@ async function handleAnalyze() {
     loadingArea.classList.remove('hidden');
 
     try {
-        // Pass null for apiKey as it's now handled by the backend
-        const evaluation = await analyzePrompt(null, modelId, prompt);
+        const evaluation = await analyzePrompt(apiKey, modelId, prompt);
         displayResults(evaluation);
     } catch (error) {
         alert(error.message);
