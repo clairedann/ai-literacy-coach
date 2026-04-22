@@ -88,7 +88,7 @@ async function handleAnalyze() {
     loadingArea.classList.remove('hidden');
 
     try {
-        const evaluation = await analyzePrompt(apiKey, 'gemini-1.5-flash', prompt);
+        const evaluation = await analyzePrompt(apiKey, 'gemini-3-flash-preview', prompt);
         displayResults(evaluation);
     } catch (error) {
         alert(error.message);
