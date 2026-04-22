@@ -1,7 +1,7 @@
 /**
  * AI Literacy Coach - Main Application Logic
  */
-import { MODELS, SDG_INFO } from './constants.js';
+import { SDG_INFO } from './constants.js';
 import { analyzePrompt } from './gemini.js';
 
 // DOM Elements
