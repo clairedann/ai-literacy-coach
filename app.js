@@ -112,6 +112,7 @@ function displayResults(data) {
     updateMetric('clarity', data.metrics.clarity);
     updateMetric('specificity', data.metrics.specificity);
     updateMetric('depth', data.metrics.depth);
+    updateMetric('ethics', data.metrics.ethics);
 
     // Textual Feedback
     detailedFeedback.innerHTML = data.feedback;
