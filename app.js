@@ -115,12 +115,12 @@ function displayResults(data) {
     updateMetric('ethics', data.metrics.ethics);
 
     // Textual Feedback
-    detailedFeedback.innerHTML = data.feedback;
+    detailedFeedback.innerHTML = marked.parse(data.feedback);
 
     // Learning Plan
     const learningPlanContent = document.getElementById('learningPlanContent');
     if (data.learningPlan) {
-        learningPlanContent.innerHTML = data.learningPlan;
+        learningPlanContent.innerHTML = marked.parse(data.learningPlan);
         document.getElementById('learningPathContainer').classList.remove('hidden');
     } else {
         document.getElementById('learningPathContainer').classList.add('hidden');

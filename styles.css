@@ -275,6 +275,33 @@ body {
   font-weight: bold;
 }
 
+/* Markdown Typography Enhancements */
+.feedback-details p, #learningPlanContent p {
+  margin-bottom: 16px;
+  color: var(--text-primary);
+}
+
+.feedback-details ul, .feedback-details ol, 
+#learningPlanContent ul, #learningPlanContent ol {
+  margin: 16px 0 24px 20px;
+}
+
+.feedback-details li, #learningPlanContent li {
+  margin-bottom: 8px;
+  color: var(--text-primary);
+}
+
+.feedback-details strong, #learningPlanContent strong {
+  color: var(--accent-light);
+  font-weight: 700;
+}
+
+.feedback-details h4, #learningPlanContent h3 {
+  margin-top: 24px;
+  margin-bottom: 12px;
+  color: var(--accent-light);
+}
+
 /* Animations */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(10px); }

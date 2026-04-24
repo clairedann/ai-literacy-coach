@@ -41,8 +41,8 @@ You must return your response as a valid JSON object with the following structur
     "depth": (0-10),
     "ethics": (0-10)
   },
-  "feedback": "A detailed educational breakdown using Markdown, explicitly mentioning which parts of S.P.E.C.I.F.I.C + Ethical Strategy are missing or well-done.",
-  "learningPlan": "A step-by-step guidance plan (Markdown). For RESEARCH, provide next steps to find sources. For WRITING, provide a structural framework/guidelines. NEVER write the content for them.",
+  "feedback": "A digestible breakdown. Use bullet points and strategic bolding. Avoid massive paragraphs. Organize by topic (e.g., Clarity, Accuracy, Ethics).",
+  "learningPlan": "A highly readable step-by-step guidance plan. Use numbered lists and bolded action items. Separate research steps from writing frameworks.",
   "suggestions": ["A list of 3 actionable steps to improve the prompt"],
   "improvedPrompt": "A version of the prompt that reflects your suggestions, for comparison.",
   "ethicalNote": "A brief note on why this task is important for their future career/learning."
