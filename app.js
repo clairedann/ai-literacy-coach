@@ -131,12 +131,21 @@ function displayResults(data) {
     data.suggestions.forEach(suggestion => {
         const div = document.createElement('div');
         div.className = 'suggestion-item';
-        div.innerHTML = `<span class="bullet">→</span> <span>${suggestion}</span>`;
+        div.innerHTML = `<span class="bullet">→</span> <span>${marked.parseInline(suggestion)}</span>`;
         suggestionsList.appendChild(div);
     });
 
     // Improved Prompt
-    improvedPromptText.textContent = `"${data.improvedPrompt}"`;
+    improvedPromptText.innerHTML = marked.parse(data.improvedPrompt);
+
+    // Ethical Note
+    const ethicalNoteContent = document.getElementById('ethicalNoteContent');
+    if (data.ethicalNote) {
+        ethicalNoteContent.innerHTML = marked.parseInline(data.ethicalNote);
+        document.getElementById('ethicalNoteContainer').classList.remove('hidden');
+    } else {
+        document.getElementById('ethicalNoteContainer').classList.add('hidden');
+    }
 
     // Scroll to results
     resultsArea.scrollIntoView({ behavior: 'smooth' });

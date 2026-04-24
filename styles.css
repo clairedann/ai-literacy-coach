@@ -302,6 +302,15 @@ body {
   color: var(--accent-light);
 }
 
+/* Fix for nested markdown paragraphs */
+#improvedPromptText p, #ethicalNoteContent p, #learningPlanContent p:last-child {
+  margin-bottom: 0;
+}
+
+#improvedPromptText {
+  color: var(--text-primary) !important;
+}
+
 /* Animations */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(10px); }
