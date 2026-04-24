@@ -117,6 +117,15 @@ function displayResults(data) {
     // Textual Feedback
     detailedFeedback.innerHTML = data.feedback;
 
+    // Learning Plan
+    const learningPlanContent = document.getElementById('learningPlanContent');
+    if (data.learningPlan) {
+        learningPlanContent.innerHTML = data.learningPlan;
+        document.getElementById('learningPathContainer').classList.remove('hidden');
+    } else {
+        document.getElementById('learningPathContainer').classList.add('hidden');
+    }
+
     // Suggestions
     suggestionsList.innerHTML = '';
     data.suggestions.forEach(suggestion => {
